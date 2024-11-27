@@ -9,29 +9,49 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Classe responsavel por realizar as configuracoes de seguranca da aplicacao.
+ * 
+ * @author Bruno Justino. 
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+	/**
+	 * Provider do token JWT.
+	 */
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    /**
+     * Retorn o filtro Jwt com o provider configurado.
+     * 
+     * @return JwtAuthenticationFilter - filtro customizado para tratar as requisicoes com token jwt.
+     */
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter(jwtTokenProvider);
     }
-
-    @Bean
+ 
+    /**
+     * Filterchain de configuracao da aplicacao.
+     * Requer autenticação para qualquer requisição.
+     * Adiciona o filtro JWT antes do filtro de autenticação padrão.
+     * 
+     * @param http - HttpSecurity - objeto spring de de configuracoes de seguranca http.
+     * @return SecurityFilterChain - cadeia de filtros de seguranca da aplicacao.
+     * @throws Exception - em caso de falha.
+     */
+	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()  // Desabilita a proteção CSRF, útil para APIs REST
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Define que a aplicação é stateless
+        http.cors().and()
+            .csrf().disable()   
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) 
             .and()
             .authorizeRequests()
-                .anyRequest().authenticated();  // Requer autenticação para qualquer outra requisição
-
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);  // Adiciona o filtro JWT antes do filtro de autenticação padrão
-
-        return http.build();  // Retorna a configuração de segurança construída
+                .anyRequest().authenticated();  
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); 
+        return http.build();  
     }
 }
