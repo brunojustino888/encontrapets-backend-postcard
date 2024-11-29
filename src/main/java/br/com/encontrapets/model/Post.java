@@ -11,52 +11,70 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 /**
- * Entidade de usuario.
+ * Entidade post.
  * 
  * @author Bruno Justino.
  */
 @Data
 @Entity
-@Table(name = "T_USUARIO", schema = "encontrapetsdb")
-public class Usuario {
+@Table(name = "T_POST", schema = "encontrapetsdb")
+public class Post {
+
+	/**
+	 * Representa a pk do post.
+	 */
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idPost;
 	
 	/**
-	 * Representa o identificador do usuario.
+	 * Representa o identificador pessoa.
 	 */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
-
+	@Column 
+	private Long idPessoa;
+	
 	/**
-	 * Representa o login e email do usuario.
+	 * Representa o tipo do post.
 	 */
-    @Column(name = "LOGIN")
-    private String login;
-
+	@Column
+	private Long idTipoPost;
+	
 	/**
-	 * Representa o campo senha do usuario.
+	 * Representa o nome do animal ou titulo.
 	 */
-    @Column(name = "SENHA")
-    private String senha;
-
+	@Column
+	private String nomeAnimal;
+	
 	/**
-	 * Representa o identificador do perfil do usuario.
+	 * Representa o tipo de animal.
 	 */
-    @Column(name = "ID_PERFIL")
-    private Long idPerfil;
-    
+	@Column
+	private Integer tipoAnimal;
+	
 	/**
-	 * Representa o identificador de bloqueio do usuario.
+	 * Representa o genero do animal.
 	 */
-    @Column(name = "FLAG_BLOQUEIO")
-    private String flagBloqueio;
-    
+	@Column
+	private String generoAnimal;
+	
 	/**
-	 * Representa o identificador de exclusao de registro do usuario.
+	 * Representa a descricao do post.
 	 */
-    @Column(name = "FLAG_EXCLUSAO")
-    private String flagExclusao;
-
+	@Column
+	private String descricaoPost;
+	
+	/**
+	 * Representa o telefonedo post.
+	 */
+	@Column
+	private String telefonePost;
+	
+	/**
+	 * Representa a visibilidade do post.
+	 */
+	@Column
+	private String flagPostVisivel;
+	
 	/**
 	 * Representa a data de cadastro do usuario.
 	 */
@@ -80,5 +98,5 @@ public class Usuario {
 	 */
     @Column(name = "USER_ATUALIZACAO", nullable = false)
     private String userAtualizacao;
-
+	
 }
