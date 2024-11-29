@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -37,7 +36,7 @@ public class Photo {
 	/**
 	 * Representa a imagem.
 	 */
-	@Lob
+//	@Lob
     @Column(name = "imagem", nullable = false)
     private byte[] imagem; 
 	
