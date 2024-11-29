@@ -7,56 +7,46 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 /**
- * Entidade de usuario.
+ * Entidade photo.
  * 
  * @author Bruno Justino.
  */
 @Data
 @Entity
-@Table(name = "T_USUARIO", schema = "encontrapetsdb")
-public class Usuario {
+@Table(name = "T_PHOTO", schema = "encontrapetsdb")
+public class Photo {
+
+	/**
+	 * Representa o identificador da imagem.
+	 */
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idPhoto;
 	
 	/**
-	 * Representa o identificador do usuario.
+	 * Representa o identificador do post.
 	 */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
-
+	@Column
+	private Long idPost;
+	
 	/**
-	 * Representa o login e email do usuario.
+	 * Representa a imagem.
 	 */
-    @Column(name = "LOGIN")
-    private String login;
-
+	@Lob
+    @Column(name = "imagem", nullable = false)
+    private byte[] imagem; 
+	
 	/**
-	 * Representa o campo senha do usuario.
+	 * Representa a ordem de anexo das imagens.
 	 */
-    @Column(name = "SENHA")
-    private String senha;
-
-	/**
-	 * Representa o identificador do perfil do usuario.
-	 */
-    @Column(name = "ID_PERFIL")
-    private Long idPerfil;
-    
-	/**
-	 * Representa o identificador de bloqueio do usuario.
-	 */
-    @Column(name = "FLAG_BLOQUEIO")
-    private String flagBloqueio;
-    
-	/**
-	 * Representa o identificador de exclusao de registro do usuario.
-	 */
-    @Column(name = "FLAG_EXCLUSAO")
-    private String flagExclusao;
-
+	@Column
+	private Integer ordem;
+	
 	/**
 	 * Representa a data de cadastro do usuario.
 	 */
@@ -80,5 +70,5 @@ public class Usuario {
 	 */
     @Column(name = "USER_ATUALIZACAO", nullable = false)
     private String userAtualizacao;
-
+	
 }
